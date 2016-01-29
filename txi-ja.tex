@@ -1,0 +1,354 @@
+% $Id$
+% txi-ja.tex -- Japanese translations and font definitions for texinfo.tex.
+%
+% Copyright 1999, 2007, 2008, 2016 Free Software Foundation, Inc.
+% 
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 3 of the license, or (at
+% your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%
+% Written by Masamichi Hosoda, 29. January 2016, <trueroad@trueroad.jp>
+
+\txisetlanguage{USenglish}{2}{3}
+
+\plainnonfrenchspacing
+
+\gdef\putwordAppendix{付録}
+\gdef\putwordChapter{章}
+\gdef\putworderror{エラー}
+\gdef\putwordfile{ファイル}
+\gdef\putwordin{in}
+\gdef\putwordIndexIsEmpty{（インデックスが空です）}
+\gdef\putwordIndexNonexistent{（インデックスがありません）}
+\gdef\putwordInfo{Info}
+\gdef\putwordInstanceVariableof{Instance Variable of}
+\gdef\putwordMethodon{Method on}
+\gdef\putwordNoTitle{無題}
+\gdef\putwordof{of}
+\gdef\putwordon{on}
+\gdef\putwordpage{ページ}
+\gdef\putwordsection{節}
+\gdef\putwordSection{節}
+\gdef\putwordsee{see}
+\gdef\putwordSee{See}
+\gdef\putwordShortTOC{簡単な目次}
+\gdef\putwordTOC{目次}
+%
+\gdef\putwordMJan{1月}
+\gdef\putwordMFeb{2月}
+\gdef\putwordMMar{3月}
+\gdef\putwordMApr{4月}
+\gdef\putwordMMay{5月}
+\gdef\putwordMJun{6月}
+\gdef\putwordMJul{7月}
+\gdef\putwordMAug{8月}
+\gdef\putwordMSep{9月}
+\gdef\putwordMOct{10月}
+\gdef\putwordMNov{11月}
+\gdef\putwordMDec{12月}
+%
+\gdef\putwordDefmac{マクロ}
+\gdef\putwordDefspec{特殊フォーム}
+\gdef\putwordDefvar{変数}
+\gdef\putwordDefopt{ユーザオプション}
+\gdef\putwordDeffunc{関数}
+
+% Produces Year Month Day style of output.
+\def\today{%
+  \number\year 年\space
+  \ifcase\month
+  \or\putwordMJan\or\putwordMFeb\or\putwordMMar\or\putwordMApr
+  \or\putwordMMay\or\putwordMJun\or\putwordMJul\or\putwordMAug
+  \or\putwordMSep\or\putwordMOct\or\putwordMNov\or\putwordMDec
+  \fi
+  \space\number\day 日}
+
+
+%
+% Japanese font definitions
+%
+
+% For LuaTeX
+%
+\ifx\luatexversion\thisisundefined
+\else
+% Definitions for a main text size of 11pt.  (The default in Texinfo.)
+% Japanese font size is muliplied by 0.962216.
+\let\definealphabetictextfontsizexi\definetextfontsizexi
+\gdef\definetextfontsizexi{%
+  % Text fonts (11.2pt, magstep1).
+  \jfont\textmc{file:ipaexm.ttf:jfm=ujis} at 10.78pt
+  \jfont\textgt{file:ipaexg.ttf:jfm=ujis} at 10.78pt
+
+  % Fonts for indices, footnotes, small examples (9pt).
+  \jfont\smallmc{file:ipaexm.ttf:jfm=ujis} at 8.66pt
+  \jfont\smallgt{file:ipaexg.ttf:jfm=ujis} at 8.66pt
+
+  % Fonts for small examples (8pt).
+  \jfont\smallermc{file:ipaexm.ttf:jfm=ujis} at 7.70pt
+  \jfont\smallergt{file:ipaexg.ttf:jfm=ujis} at 7.70pt
+
+  % Fonts for title page (20.4pt):
+  \jfont\titlemc{file:ipaexm.ttf:jfm=ujis} at 19.63pt
+  \jfont\titlegt{file:ipaexg.ttf:jfm=ujis} at 19.63pt
+
+  % Chapter (and unnumbered) fonts (17.28pt).
+  \jfont\chapmc{file:ipaexm.ttf:jfm=ujis} at 16.63pt
+  \jfont\chapgt{file:ipaexg.ttf:jfm=ujis} at 16.63pt
+
+  % Section fonts (14.4pt).
+  \jfont\secmc{file:ipaexm.ttf:jfm=ujis} at 13.86pt
+  \jfont\secgt{file:ipaexg.ttf:jfm=ujis} at 13.86pt
+
+  % Subsection fonts (13.15pt).
+  \jfont\ssecmc{file:ipaexm.ttf:jfm=ujis} at 12.65pt
+  \jfont\ssecgt{file:ipaexg.ttf:jfm=ujis} at 12.65pt
+
+  % Reduced fonts for @acro in text (10pt).
+  \jfont\reducedmc{file:ipaexm.ttf:jfm=ujis} at 9.62pt
+  \jfont\reducedgt{file:ipaexg.ttf:jfm=ujis} at 9.62pt
+
+  % Fonts for short table of contents.
+  \jfont\shortcontmc{file:ipaexm.ttf:jfm=ujis} at 11.55pt
+  \jfont\shortcontgt{file:ipaexg.ttf:jfm=ujis} at 11.55pt
+
+  \definealphabetictextfontsizexi
+}
+
+% Definitions for a main text size of 10pt.
+% Japanese font size is muliplied by 0.962216.
+\let\definealphabetictextfontsizexi\definetextfontsizex
+\gdef\definetextfontsizex{%
+  % Text fonts (10pt).
+  \jfont\textmc{file:ipaexm.ttf:jfm=ujis} at 9.62pt
+  \jfont\textgt{file:ipaexg.ttf:jfm=ujis} at 9.62pt
+
+  % Fonts for indices, footnotes, small examples (9pt).
+  \jfont\smallmc{file:ipaexm.ttf:jfm=ujis} at 8.66pt
+  \jfont\smallgt{file:ipaexg.ttf:jfm=ujis} at 8.66pt
+
+  % Fonts for small examples (8pt).
+  \jfont\smallermc{file:ipaexm.ttf:jfm=ujis} at 7.70pt
+  \jfont\smallergt{file:ipaexg.ttf:jfm=ujis} at 7.70pt
+
+  % Fonts for title page (20.4pt):
+  \jfont\titlemc{file:ipaexm.ttf:jfm=ujis} at 19.63pt
+  \jfont\titlegt{file:ipaexg.ttf:jfm=ujis} at 19.63pt
+
+  % Chapter fonts (14.4pt).
+  \jfont\chapmc{file:ipaexm.ttf:jfm=ujis} at 13.86pt
+  \jfont\chapgt{file:ipaexg.ttf:jfm=ujis} at 13.86pt
+
+  % Section fonts (12pt).
+  \jfont\secmc{file:ipaexm.ttf:jfm=ujis} at 11.55pt
+  \jfont\secgt{file:ipaexg.ttf:jfm=ujis} at 11.55pt
+
+  % Subsection fonts (10pt).
+  \jfont\ssecmc{file:ipaexm.ttf:jfm=ujis} at 9.62pt
+  \jfont\ssecgt{file:ipaexg.ttf:jfm=ujis} at 9.62pt
+
+  % Reduced fonts for @acro in text (9pt).
+  \jfont\reducedmc{file:ipaexm.ttf:jfm=ujis} at 8.66pt
+  \jfont\reducedgt{file:ipaexg.ttf:jfm=ujis} at 8.66pt
+
+  % Fonts for short table of contents.
+  \jfont\shortcontmc{file:ipaexm.ttf:jfm=ujis} at 11.55pt
+  \jfont\shortcontgt{file:ipaexg.ttf:jfm=ujis} at 11.55pt
+
+  \definealphabetictextfontsizex
+}
+\fi
+
+% For XeTeX
+%
+\ifx\XeTeXrevision\thisisundefined
+\else
+% Definitions for a main text size of 11pt.  (The default in Texinfo.)
+% Japanese font size is muliplied by 0.962216.
+\let\definealphabetictextfontsizexi\definetextfontsizexi
+\gdef\definetextfontsizexi{%
+  % Text fonts (11.2pt, magstep1).
+  \font\textmc"[ipaexm.ttf]:mapping=tex-text" at 10.78pt
+  \font\textgt"[ipaexg.ttf]:mapping=tex-text" at 10.78pt
+
+  % Fonts for indices, footnotes, small examples (9pt).
+  \font\smallmc"[ipaexm.ttf]:mapping=tex-text" at 8.66pt
+  \font\smallgt"[ipaexg.ttf]:mapping=tex-text" at 8.66pt
+
+  % Fonts for small examples (8pt).
+  \font\smallermc"[ipaexm.ttf]:mapping=tex-text" at 7.70pt
+  \font\smallergt"[ipaexg.ttf]:mapping=tex-text" at 7.70pt
+
+  % Fonts for title page (20.4pt):
+  \font\titlemc"[ipaexm.ttf]:mapping=tex-text" at 19.63pt
+  \font\titlegt"[ipaexg.ttf]:mapping=tex-text" at 19.63pt
+
+  % Chapter (and unnumbered) fonts (17.28pt).
+  \font\chapmc"[ipaexm.ttf]:mapping=tex-text" at 16.63pt
+  \font\chapgt"[ipaexg.ttf]:mapping=tex-text" at 16.63pt
+
+  % Section fonts (14.4pt).
+  \font\secmc"[ipaexm.ttf]:mapping=tex-text" at 13.86pt
+  \font\secgt"[ipaexg.ttf]:mapping=tex-text" at 13.86pt
+
+  % Subsection fonts (13.15pt).
+  \font\ssecmc"[ipaexm.ttf]:mapping=tex-text" at 12.65pt
+  \font\ssecgt"[ipaexg.ttf]:mapping=tex-text" at 12.65pt
+
+  % Reduced fonts for @acro in text (10pt).
+  \font\reducedmc"[ipaexm.ttf]:mapping=tex-text" at 9.62pt
+  \font\reducedgt"[ipaexg.ttf]:mapping=tex-text" at 9.62pt
+
+  % Fonts for short table of contents.
+  \font\shortcontmc"[ipaexm.ttf]:mapping=tex-text" at 11.55pt
+  \font\shortcontgt"[ipaexg.ttf]:mapping=tex-text" at 11.55pt
+
+  \definealphabetictextfontsizexi
+}
+
+% Definitions for a main text size of 10pt.
+% Japanese font size is muliplied by 0.962216.
+\let\definealphabetictextfontsizexi\definetextfontsizex
+\gdef\definetextfontsizex{%
+  % Text fonts (10pt).
+  \font\textmc"[ipaexm.ttf]:mapping=tex-text" at 9.62pt
+  \font\textgt"[ipaexg.ttf]:mapping=tex-text" at 9.62pt
+
+  % Fonts for indices, footnotes, small examples (9pt).
+  \font\smallmc"[ipaexm.ttf]:mapping=tex-text" at 8.66pt
+  \font\smallgt"[ipaexg.ttf]:mapping=tex-text" at 8.66pt
+
+  % Fonts for small examples (8pt).
+  \font\smallermc"[ipaexm.ttf]:mapping=tex-text" at 7.70pt
+  \font\smallergt"[ipaexg.ttf]:mapping=tex-text" at 7.70pt
+
+  % Fonts for title page (20.4pt):
+  \font\titlemc"[ipaexm.ttf]:mapping=tex-text" at 19.63pt
+  \font\titlegt"[ipaexg.ttf]:mapping=tex-text" at 19.63pt
+
+  % Chapter fonts (14.4pt).
+  \font\chapmc"[ipaexm.ttf]:mapping=tex-text" at 13.86pt
+  \font\chapgt"[ipaexg.ttf]:mapping=tex-text" at 13.86pt
+
+  % Section fonts (12pt).
+  \font\secmc"[ipaexm.ttf]:mapping=tex-text" at 11.55pt
+  \font\secgt"[ipaexg.ttf]:mapping=tex-text" at 11.55pt
+
+  % Subsection fonts (10pt).
+  \font\ssecmc"[ipaexm.ttf]:mapping=tex-text" at 9.62pt
+  \font\ssecgt"[ipaexg.ttf]:mapping=tex-text" at 9.62pt
+
+  % Reduced fonts for @acro in text (9pt).
+  \font\reducedmc"[ipaexm.ttf]:mapping=tex-text" at 8.66pt
+  \font\reducedgt"[ipaexg.ttf]:mapping=tex-text" at 8.66pt
+
+  % Fonts for short table of contents.
+  \font\shortcontmc"[ipaexm.ttf]:mapping=tex-text" at 11.55pt
+  \font\shortcontgt"[ipaexg.ttf]:mapping=tex-text" at 11.55pt
+
+  \definealphabetictextfontsizex
+}
+
+\XeTeXlinebreaklocale "ja_JP"
+\XeTeXlinebreakskip=0em plus 0.1em minus 0.01em
+\XeTeXlinebreakpenalty=0
+
+\fi
+
+\iftxinativeunicodecapable
+
+% Sync fonts
+
+\let\alphabeticrm\rm
+\gdef\rm{\alphabeticrm\tenmc}
+
+\let\alphabeticit\it
+\gdef\it{\alphabeticit\tenmc}
+
+\let\alphabeticsl\sl
+\gdef\sl{\alphabeticsl\tengt}
+
+\let\alphabeticbf\bf
+\gdef\bf{\alphabeticbf\tengt}
+
+\let\alphabetictt\tt
+\gdef\tt{\alphabetictt\tengt}
+
+% Add fonts
+
+\let\alphabetictextfonts\textfonts
+\gdef\textfonts{%
+  \alphabetictextfonts
+  \let\tenmc\textmc
+  \let\tengt\textgt
+}
+
+\let\alphabetictitlefonts\titlefonts
+\gdef\titlefonts{%
+  \alphabetictitlefonts
+  \let\tenmc\titlemc
+  \let\tengt\titlegt
+}
+
+\let\alphabeticchapfonts\chapfonts
+\gdef\chapfonts{%
+  \alphabeticchapfonts
+  \let\tenmc\chapmc
+  \let\tengt\chapgt
+}
+
+\let\alphabeticsecfonts\secfonts
+\gdef\secfonts{%
+  \alphabeticsecfonts
+  \let\tenmc\secmc
+  \let\tengt\secgt
+}
+
+\let\alphabeticsubsecfonts\subsecfonts
+\gdef\subsecfonts{%
+  \alphabeticsubsecfonts
+  \let\tenmc\ssecmc
+  \let\tengt\ssecgt
+}
+
+\global\let\subsubsecfonts\subsecfonts
+
+\let\alphabeticreducedfonts\reducedfonts
+\gdef\reducedfonts{%
+  \alphabeticreducedfonts
+  \let\tenmc\reducedmc
+  \let\tengt\reducedgt
+}
+
+\let\alphabeticsmallfonts\smallfonts
+\gdef\smallfonts{%
+  \alphabeticsmallfonts
+  \let\tenmc\smallmc
+  \let\tengt\smallgt
+}
+
+\let\alphabeticsmallerfonts\smallerfonts
+\gdef\smallerfonts{%
+  \alphabeticsmallerfonts
+  \let\tenmc\smallermc
+  \let\tengt\smallergt
+}
+
+\let\smallexamplefonts\smallfonts
+
+% Reset fonts
+
+\globaldefs = 1
+\definetextfontsizexi
+\globaldefs = 0
+
+\fi
