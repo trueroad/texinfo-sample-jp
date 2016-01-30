@@ -11,7 +11,7 @@ txi-ja.tex
   Japanese translations and font definitions for texinfo.tex.
 
 texinfo-ja.tex
-  LuaTeX-ja loader
+  Japanese texinfo.tex loader
 
 wagahai.texi
   Japanese Texinfo file sample

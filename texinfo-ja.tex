@@ -1,8 +1,32 @@
-% LuaTeX-ja loader
+% Japanese texinfo.tex loader
+%
+% Some CJK packages are necessary to load before texinfo.tex.
+%
 
+% For LuaTeX
+%
 \ifx\luatexversion\thisisundefined
 \else
+  % LuaTeX-ja: Typeset Japanese with Lua(La)TeX
+  % http://www.ctan.org/tex-archive/macros/luatex/generic/luatexja
   \input luatexja.sty
 \fi
 
+% For XeTeX
+%
+\ifx\XeTeXrevision\thisisundefined
+\else
+  % zhspacing: Spacing for mixed CJK-English documents in XeTeX
+  % https://www.ctan.org/tex-archive/macros/xetex/generic/zhspacing
+  %
+  % This package is originally for Chinese,
+  % but can also used in Japanese.
+  %
+  \def\zhfont{dummy} % Cancel the request of SimSun font
+  \def\zhpunctfont{dummy} % Cancel the request of SimSun font
+  \input zhspacing.sty
+  \zhspacing
+\fi
+
+% Original texinfo.tex
 \input texinfo.tex

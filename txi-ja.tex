@@ -16,7 +16,7 @@
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %
-% Written by Masamichi Hosoda, 29. January 2016, <trueroad@trueroad.jp>
+% Written by Masamichi Hosoda, 30. January 2016, <trueroad@trueroad.jp>
 
 \txisetlanguage{USenglish}{2}{3}
 
@@ -172,45 +172,80 @@
 %
 \ifx\XeTeXrevision\thisisundefined
 \else
+% Fix some Japanese character class
+% (unicode-letters.tex is wrong.)
+\def\do#1{\XeTeXcharclass"#1=1 }
+\do{3041}\do{3043}\do{3045}\do{3047}\do{3049}\do{3063}
+\do{3083}\do{3085}\do{3087}\do{308E}\do{3095}\do{3096}
+\do{30A1}\do{30A3}\do{30A5}\do{30A7}\do{30A9}\do{30C3}
+\do{30E3}\do{30E5}\do{30E7}\do{30EE}\do{30F5}\do{30F6}
+\do{30FC}\do{31F0}\do{31F1}\do{31F2}\do{31F3}\do{31F4}
+\do{31F5}\do{31F6}\do{31F7}\do{31F8}\do{31F9}\do{31FA}
+\do{31FB}\do{31FC}\do{31FD}\do{31FE}\do{31FF}
+
+% Setting Japanese font instead of Chinese font
+\def\setjafont#1{%
+  \let\zhfont#1\let\zhpunctfont#1%
+  \let\zhextafont#1\let\zhextbfont#1%
+}
+
 % Definitions for a main text size of 11pt.  (The default in Texinfo.)
 % Japanese font size is muliplied by 0.962216.
 \let\definealphabetictextfontsizexi\definetextfontsizexi
 \gdef\definetextfontsizexi{%
   % Text fonts (11.2pt, magstep1).
-  \font\textmc"[ipaexm.ttf]:mapping=tex-text" at 10.78pt
-  \font\textgt"[ipaexg.ttf]:mapping=tex-text" at 10.78pt
+  \font\textmczzz"[ipaexm.ttf]:mapping=tex-text" at 10.78pt
+  \font\textgtzzz"[ipaexg.ttf]:mapping=tex-text" at 10.78pt
+  \def\textmc{\setjafont\textmczzz}
+  \def\textgt{\setjafont\textgtzzz}
 
   % Fonts for indices, footnotes, small examples (9pt).
-  \font\smallmc"[ipaexm.ttf]:mapping=tex-text" at 8.66pt
-  \font\smallgt"[ipaexg.ttf]:mapping=tex-text" at 8.66pt
+  \font\smallmczzz"[ipaexm.ttf]:mapping=tex-text" at 8.66pt
+  \font\smallgtzzz"[ipaexg.ttf]:mapping=tex-text" at 8.66pt
+  \def\smallmc{\setjafont\smallmczzz}
+  \def\smallgt{\setjafont\smallgtzzz}
 
   % Fonts for small examples (8pt).
-  \font\smallermc"[ipaexm.ttf]:mapping=tex-text" at 7.70pt
-  \font\smallergt"[ipaexg.ttf]:mapping=tex-text" at 7.70pt
+  \font\smallermczzz"[ipaexm.ttf]:mapping=tex-text" at 7.70pt
+  \font\smallergtzzz"[ipaexg.ttf]:mapping=tex-text" at 7.70pt
+  \def\smallermc{\setjafont\smallermczzz}
+  \def\smallergt{\setjafont\smallergtzzz}
 
   % Fonts for title page (20.4pt):
-  \font\titlemc"[ipaexm.ttf]:mapping=tex-text" at 19.63pt
-  \font\titlegt"[ipaexg.ttf]:mapping=tex-text" at 19.63pt
+  \font\titlemczzz"[ipaexm.ttf]:mapping=tex-text" at 19.63pt
+  \font\titlegtzzz"[ipaexg.ttf]:mapping=tex-text" at 19.63pt
+  \def\titlemc{\setjafont\titlemczzz}
+  \def\titlegt{\setjafont\titlegtzzz}
 
   % Chapter (and unnumbered) fonts (17.28pt).
-  \font\chapmc"[ipaexm.ttf]:mapping=tex-text" at 16.63pt
-  \font\chapgt"[ipaexg.ttf]:mapping=tex-text" at 16.63pt
+  \font\chapmczzz"[ipaexm.ttf]:mapping=tex-text" at 16.63pt
+  \font\chapgtzzz"[ipaexg.ttf]:mapping=tex-text" at 16.63pt
+  \def\chapmc{\setjafont\chapmczzz}
+  \def\chapgt{\setjafont\chapgtzzz}
 
   % Section fonts (14.4pt).
-  \font\secmc"[ipaexm.ttf]:mapping=tex-text" at 13.86pt
-  \font\secgt"[ipaexg.ttf]:mapping=tex-text" at 13.86pt
+  \font\secmczzz"[ipaexm.ttf]:mapping=tex-text" at 13.86pt
+  \font\secgtzzz"[ipaexg.ttf]:mapping=tex-text" at 13.86pt
+  \def\secmc{\setjafont\secmczzz}
+  \def\secgt{\setjafont\secgtzzz}
 
   % Subsection fonts (13.15pt).
-  \font\ssecmc"[ipaexm.ttf]:mapping=tex-text" at 12.65pt
-  \font\ssecgt"[ipaexg.ttf]:mapping=tex-text" at 12.65pt
+  \font\ssecmczzz"[ipaexm.ttf]:mapping=tex-text" at 12.65pt
+  \font\ssecgtzzz"[ipaexg.ttf]:mapping=tex-text" at 12.65pt
+  \def\ssecmc{\setjafont\ssecmczzz}
+  \def\ssecgt{\setjafont\ssecgtzzz}
 
   % Reduced fonts for @acro in text (10pt).
-  \font\reducedmc"[ipaexm.ttf]:mapping=tex-text" at 9.62pt
-  \font\reducedgt"[ipaexg.ttf]:mapping=tex-text" at 9.62pt
+  \font\reducedmczzz"[ipaexm.ttf]:mapping=tex-text" at 9.62pt
+  \font\reducedgtzzz"[ipaexg.ttf]:mapping=tex-text" at 9.62pt
+  \def\reducedmc{\setjafont\reducedmczzz}
+  \def\reducedgt{\setjafont\reducedgtzzz}
 
   % Fonts for short table of contents.
-  \font\shortcontmc"[ipaexm.ttf]:mapping=tex-text" at 11.55pt
-  \font\shortcontgt"[ipaexg.ttf]:mapping=tex-text" at 11.55pt
+  \font\shortcontmczzz"[ipaexm.ttf]:mapping=tex-text" at 11.55pt
+  \font\shortcontgtzzz"[ipaexg.ttf]:mapping=tex-text" at 11.55pt
+  \def\shortcontmc{\setjafont\shortcontmczzz}
+  \def\shortcontgt{\setjafont\shortcontgtzzz}
 
   \definealphabetictextfontsizexi
 }
@@ -220,40 +255,58 @@
 \let\definealphabetictextfontsizexi\definetextfontsizex
 \gdef\definetextfontsizex{%
   % Text fonts (10pt).
-  \font\textmc"[ipaexm.ttf]:mapping=tex-text" at 9.62pt
-  \font\textgt"[ipaexg.ttf]:mapping=tex-text" at 9.62pt
+  \font\textmczzz"[ipaexm.ttf]:mapping=tex-text" at 9.62pt
+  \font\textgtzzz"[ipaexg.ttf]:mapping=tex-text" at 9.62pt
+  \def\textmc{\setjafont\textmczzz}
+  \def\textgt{\setjafont\textgtzzz}
 
   % Fonts for indices, footnotes, small examples (9pt).
-  \font\smallmc"[ipaexm.ttf]:mapping=tex-text" at 8.66pt
-  \font\smallgt"[ipaexg.ttf]:mapping=tex-text" at 8.66pt
+  \font\smallmczzz"[ipaexm.ttf]:mapping=tex-text" at 8.66pt
+  \font\smallgtzzz"[ipaexg.ttf]:mapping=tex-text" at 8.66pt
+  \def\smallmc{\setjafont\smallmczzz}
+  \def\smallgt{\setjafont\smallgtzzz}
 
   % Fonts for small examples (8pt).
-  \font\smallermc"[ipaexm.ttf]:mapping=tex-text" at 7.70pt
-  \font\smallergt"[ipaexg.ttf]:mapping=tex-text" at 7.70pt
+  \font\smallermczzz"[ipaexm.ttf]:mapping=tex-text" at 7.70pt
+  \font\smallergtzzz"[ipaexg.ttf]:mapping=tex-text" at 7.70pt
+  \def\smallermc{\setjafont\smallermczzz}
+  \def\smallergt{\setjafont\smallergtzzz}
 
   % Fonts for title page (20.4pt):
-  \font\titlemc"[ipaexm.ttf]:mapping=tex-text" at 19.63pt
-  \font\titlegt"[ipaexg.ttf]:mapping=tex-text" at 19.63pt
+  \font\titlemczzz"[ipaexm.ttf]:mapping=tex-text" at 19.63pt
+  \font\titlegtzzz"[ipaexg.ttf]:mapping=tex-text" at 19.63pt
+  \def\titlemc{\setjafont\titlemczzz}
+  \def\titlegt{\setjafont\titlegtzzz}
 
   % Chapter fonts (14.4pt).
-  \font\chapmc"[ipaexm.ttf]:mapping=tex-text" at 13.86pt
-  \font\chapgt"[ipaexg.ttf]:mapping=tex-text" at 13.86pt
+  \font\chapmczzz"[ipaexm.ttf]:mapping=tex-text" at 13.86pt
+  \font\chapgtzzz"[ipaexg.ttf]:mapping=tex-text" at 13.86pt
+  \def\chapmc{\setjafont\chapmczzz}
+  \def\chapgt{\setjafont\chapgtzzz}
 
   % Section fonts (12pt).
-  \font\secmc"[ipaexm.ttf]:mapping=tex-text" at 11.55pt
-  \font\secgt"[ipaexg.ttf]:mapping=tex-text" at 11.55pt
+  \font\secmczzz"[ipaexm.ttf]:mapping=tex-text" at 11.55pt
+  \font\secgtzzz"[ipaexg.ttf]:mapping=tex-text" at 11.55pt
+  \def\secmc{\setjafont\secmczzz}
+  \def\secgt{\setjafont\secgtzzz}
 
   % Subsection fonts (10pt).
-  \font\ssecmc"[ipaexm.ttf]:mapping=tex-text" at 9.62pt
-  \font\ssecgt"[ipaexg.ttf]:mapping=tex-text" at 9.62pt
+  \font\ssecmczzz"[ipaexm.ttf]:mapping=tex-text" at 9.62pt
+  \font\ssecgtzzz"[ipaexg.ttf]:mapping=tex-text" at 9.62pt
+  \def\ssecmc{\setjafont\ssecmczzz}
+  \def\ssecgt{\setjafont\ssecgtzzz}
 
   % Reduced fonts for @acro in text (9pt).
-  \font\reducedmc"[ipaexm.ttf]:mapping=tex-text" at 8.66pt
-  \font\reducedgt"[ipaexg.ttf]:mapping=tex-text" at 8.66pt
+  \font\reducedmczzz"[ipaexm.ttf]:mapping=tex-text" at 8.66pt
+  \font\reducedgtzzz"[ipaexg.ttf]:mapping=tex-text" at 8.66pt
+  \def\reducedmc{\setjafont\reducedmczzz}
+  \def\reducedgt{\setjafont\reducedgtzzz}
 
   % Fonts for short table of contents.
-  \font\shortcontmc"[ipaexm.ttf]:mapping=tex-text" at 11.55pt
-  \font\shortcontgt"[ipaexg.ttf]:mapping=tex-text" at 11.55pt
+  \font\shortcontmczzz"[ipaexm.ttf]:mapping=tex-text" at 11.55pt
+  \font\shortcontgtzzz"[ipaexg.ttf]:mapping=tex-text" at 11.55pt
+  \def\shortcontmc{\setjafont\shortcontmczzz}
+  \def\shortcontgt{\setjafont\shortcontgtzzz}
 
   \definealphabetictextfontsizex
 }
