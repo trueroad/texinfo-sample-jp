@@ -1,0 +1,322 @@
+--- texinfo.tex.org	2016-01-31 22:29:01.118955100 +0900
++++ texinfo.tex	2016-01-31 22:34:15.478334500 +0900
+@@ -9433,43 +9433,68 @@
+   \global\righthyphenmin = #3\relax
+ }
+ 
+-% Get input by bytes instead of by UTF-8 codepoints for XeTeX and LuaTeX, 
+-% otherwise the encoding support is completely broken.
++% XeTeX and LuaTeX can handle native Unicode.
++% Their default I/O is UTF-8 sequence instead of byte-wise.
++% Other TeX engine (pdfTeX etc.) I/O is byte-wise.
++%
++\newif\iftxinativeunicodecapable
++\newif\iftxiusebytewiseio
++
+ \ifx\XeTeXrevision\thisisundefined
++  \ifx\luatexversion\thisisundefined
++    \txinativeunicodecapablefalse
++    \txiusebytewiseiotrue
++  \else
++    \txinativeunicodecapabletrue
++    \txiusebytewiseiofalse
++  \fi
+ \else
+-\XeTeXdefaultencoding "bytes"  % For subsequent files to be read
+-\XeTeXinputencoding "bytes"  % Effective in texinfo.tex only
+-% Unfortunately, there seems to be no corresponding XeTeX command for
+-% output encoding.  This is a problem for auxiliary index and TOC files.
+-% The only solution would be perhaps to write out @U{...} sequences in
+-% place of UTF-8 characters.
++  \txinativeunicodecapabletrue
++  \txiusebytewiseiofalse
+ \fi
+ 
+-\ifx\luatexversion\thisisundefined
+-\else
+-\directlua{
+-local utf8_char, byte, gsub = unicode.utf8.char, string.byte, string.gsub
+-local function convert_char (char)
+-  return utf8_char(byte(char))
+-end
+-
+-local function convert_line (line)
+-  return gsub(line, ".", convert_char)
+-end
+-
+-callback.register("process_input_buffer", convert_line)
+-
+-local function convert_line_out (line)
+-  local line_out = ""
+-  for c in string.utfvalues(line) do
+-     line_out = line_out .. string.char(c)
+-  end
+-  return line_out
+-end
++% Set I/O by bytes instead of UTF-8 sequence for XeTeX and LuaTex
++% for non-UTF-8 (byte-wise) encodings.
++%
++\def\setbytewiseio{%
++  \ifx\XeTeXrevision\thisisundefined
++  \else
++    \XeTeXdefaultencoding "bytes"  % For subsequent files to be read
++    \XeTeXinputencoding "bytes"  % For document root file
++    % Unfortunately, there seems to be no corresponding XeTeX command for
++    % output encoding.  This is a problem for auxiliary index and TOC files.
++    % The only solution would be perhaps to write out @U{...} sequences in
++    % place of non-ASCII characters.
++  \fi
+ 
+-callback.register("process_output_buffer", convert_line_out)
++  \ifx\luatexversion\thisisundefined
++  \else
++    \directlua{
++    local utf8_char, byte, gsub = unicode.utf8.char, string.byte, string.gsub
++    local function convert_char (char)
++      return utf8_char(byte(char))
++    end
++
++    local function convert_line (line)
++      return gsub(line, ".", convert_char)
++    end
++
++    callback.register("process_input_buffer", convert_line)
++
++    local function convert_line_out (line)
++      local line_out = ""
++      for c in string.utfvalues(line) do
++         line_out = line_out .. string.char(c)
++      end
++      return line_out
++    end
++
++    callback.register("process_output_buffer", convert_line_out)
++    }
++  \fi
++
++  \txiusebytewiseiotrue
+ }
+-\fi
+ 
+ 
+ % Helpers for encodings.
+@@ -9496,13 +9521,6 @@
+ %
+ \def\documentencoding{\parseargusing\filenamecatcodes\documentencodingzzz}
+ \def\documentencodingzzz#1{%
+-  % Get input by bytes instead of by UTF-8 codepoints for XeTeX,
+-  % otherwise the encoding support is completely broken.
+-  % This settings is for the document root file.
+-  \ifx\XeTeXrevision\thisisundefined
+-  \else
+-    \XeTeXinputencoding "bytes"
+-  \fi
+   %
+   % Encoding being declared for the document.
+   \def\declaredencoding{\csname #1.enc\endcsname}%
+@@ -9519,22 +9537,37 @@
+      \asciichardefs
+   %
+   \else \ifx \declaredencoding \lattwo
++     \iftxinativeunicodecapable
++       \setbytewiseio
++     \fi
+      \setnonasciicharscatcode\active
+      \lattwochardefs
+   %
+   \else \ifx \declaredencoding \latone
++     \iftxinativeunicodecapable
++       \setbytewiseio
++     \fi
+      \setnonasciicharscatcode\active
+      \latonechardefs
+   %
+   \else \ifx \declaredencoding \latnine
++     \iftxinativeunicodecapable
++       \setbytewiseio
++     \fi
+      \setnonasciicharscatcode\active
+      \latninechardefs
+   %
+   \else \ifx \declaredencoding \utfeight
+-     \setnonasciicharscatcode\active
+-     % since we already invoked \utfeightchardefs at the top level
+-     % (below), do not re-invoke it, then our check for duplicated
+-     % definitions triggers.  Making non-ascii chars active is enough.
++     \iftxinativeunicodecapable
++       % For native Unicode (XeTeX and LuaTeX)
++       \nativeunicodechardefs
++     \else
++       % For UTF-8 byte sequence (pdfTeX)
++       \setnonasciicharscatcode\active
++       % since we already invoked \utfeightchardefs at the top level
++       % (below), do not re-invoke it, then our check for duplicated
++       % definitions triggers.  Making non-ascii chars active is enough.
++     \fi
+   %
+   \else
+     \message{Ignoring unknown document encoding: #1.}%
+@@ -9849,13 +9882,26 @@
+ % @U{xxxx} to produce U+xxxx, if we support it.
+ \def\U#1{%
+   \expandafter\ifx\csname uni:#1\endcsname \relax
+-    \errhelp = \EMsimple	
+-    \errmessage{Unicode character U+#1 not supported, sorry}%
++    \iftxinativeunicodecapable
++      % Any Unicode characters can be used by native Unicode.
++      % However, if the font does not have the glyph, the letter will miss.
++      \begingroup
++        \uccode`\.="#1\relax
++        \uppercase{.}
++      \endgroup
++    \else
++      \errhelp = \EMsimple	
++      \errmessage{Unicode character U+#1 not supported, sorry}%
++    \fi
+   \else
+     \csname uni:#1\endcsname
+   \fi
+ }
+ 
++% For UTF-8 byte sequence (pdfTeX)
++% Definition macro to replace the Unicode character
++% Definition macro that is used by @U command
++%
+ \begingroup
+   \catcode`\"=12
+   \catcode`\<=12
+@@ -9864,7 +9910,7 @@
+   \catcode`\;=12
+   \catcode`\!=12
+   \catcode`\~=13
+-  \gdef\DeclareUnicodeCharacter#1#2{%
++  \gdef\DeclareUnicodeCharacterUTFviii#1#2{%
+     \countUTFz = "#1\relax
+     %\wlog{\space\space defining Unicode char U+#1 (decimal \the\countUTFz)}%
+     \begingroup
+@@ -9922,6 +9968,37 @@
+     \uppercase{\gdef\UTFviiiTmp{#2#3#4}}}
+ \endgroup
+ 
++% For native Unicode (XeTeX and LuaTeX)
++% Definition macro to replace the Unicode character
++%
++\def\DeclareUnicodeCharacterNative#1#2{%
++  \catcode"#1=\active
++  \begingroup
++    \uccode`\~="#1\relax
++    \uppercase{\gdef~}{#2}%
++  \endgroup}
++
++% For native Unicode (XeTeX and LuaTeX)
++% Definition macro not to replace (through) the Unicode character
++%
++\def\DeclareUnicodeCharacterNativeThru#1#2{%
++  \catcode"#1=\active
++  \begingroup
++    \uccode`\.="#1\relax
++    \uppercase{\endgroup \def\UTFNativeTmp{.}}%
++  \begingroup
++    \uccode`\~="#1\relax
++    \uppercase{\endgroup \edef~}{\UTFNativeTmp}%
++}
++
++% For native Unicode (XeTeX and LuaTeX)
++% Definition macro that is used by @U command
++%
++\def\DeclareUnicodeCharacterNativeAtU#1#2{%
++  \def\UTFAtUTmp{#2}
++  \expandafter\globallet\csname uni:#1\endcsname \UTFAtUTmp
++}
++
+ % https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_M
+ % U+0000..U+007F = https://en.wikipedia.org/wiki/Basic_Latin_(Unicode_block)
+ % U+0080..U+00FF = https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)
+@@ -9936,7 +10013,7 @@
+ % We won't be doing that here in this simple file.  But we can try to at
+ % least make most of the characters not bomb out.
+ %
+-\def\utfeightchardefs{%
++\def\unicodechardefs{%
+   \DeclareUnicodeCharacter{00A0}{\tie}
+   \DeclareUnicodeCharacter{00A1}{\exclamdown}
+   \DeclareUnicodeCharacter{00A2}{{\tcfont \char162}}% 0242=cent
+@@ -10606,14 +10683,42 @@
+   %
+   \global\mathchardef\checkmark="1370 % actually the square root sign
+   \DeclareUnicodeCharacter{2713}{\ensuremath\checkmark}
+-}% end of \utfeightchardefs
++}% end of \unicodechardefs
++
++% UTF-8 byte sequence (pdfTeX) definitions (replacing and @U command)
++% It makes the setting that replace UTF-8 byte sequence.
++\def\utfeightchardefs{%
++  \let\DeclareUnicodeCharacter\DeclareUnicodeCharacterUTFviii
++  \unicodechardefs
++}
++
++% Native Unicode (XeTeX and LuaTeX) character replacing definitions
++% It makes the setting that replace the Unicode characters.
++\def\nativeunicodechardefs{%
++  \let\DeclareUnicodeCharacter\DeclareUnicodeCharacterNative
++  \unicodechardefs
++}
++
++% Native Unicode (XeTeX and LuaTeX) character ``through'' definitions
++% It makes the setting that does not replace the Unicode characters.
++\def\nativeunicodechardefsthru{%
++  \let\DeclareUnicodeCharacter\DeclareUnicodeCharacterNativeThru
++  \unicodechardefs
++}
++
++% Native Unicode (XeTeX and LuaTeX) @U command definitions
++\def\nativeunicodechardefsatu{%
++  \let\DeclareUnicodeCharacter\DeclareUnicodeCharacterNativeAtU
++  \unicodechardefs
++}
+ 
+ % US-ASCII character definitions.
+ \def\asciichardefs{% nothing need be done
+    \relax
+ }
+ 
+-% Latin1 (ISO-8859-1) character definitions.
++% Non-ASCII bytes ``through'' definitions.
++% It makes the setting that does not replace the non-ASCII byte.
+ \def\nonasciistringdefs{%
+   \setnonasciicharscatcode\active
+   \def\defstringchar##1{\def##1{\string##1}}%
+@@ -10659,9 +10764,23 @@
+   \defstringchar^^fc\defstringchar^^fd\defstringchar^^fe\defstringchar^^ff%
+ }
+ 
++% Character ``through'' definitions.
++% It makes the setting that does not replace the characters.
++\def\throughcharactersdefs{%
++  \iftxiusebytewiseio
++    \nonasciistringdefs
++  \else
++    \nativeunicodechardefsthru
++  \fi
++}
++
+ 
+ % define all the unicode characters we know about, for the sake of @U.
+-\utfeightchardefs
++\iftxinativeunicodecapable
++  \nativeunicodechardefsatu
++\else
++  \utfeightchardefs
++\fi
+ 
+ 
+ % Make non-ASCII characters printable again for compatibility with
+@@ -11010,7 +11129,7 @@
+ %
+ {@catcode`- = @active
+  @gdef@normalturnoffactive{%
+-   @nonasciistringdefs
++   @throughcharactersdefs
+    @let-=@normaldash
+    @let"=@normaldoublequote
+    @let$=@normaldollar %$ font-lock fix
