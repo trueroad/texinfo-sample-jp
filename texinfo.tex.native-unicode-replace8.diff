@@ -1,6 +1,6 @@
---- texinfo.tex.org	2016-01-31 22:29:01.118955100 +0900
-+++ texinfo.tex	2016-01-31 22:34:15.478334500 +0900
-@@ -9433,43 +9433,68 @@
+--- texinfo.tex.org	2016-02-01 22:50:51.325028300 +0900
++++ texinfo.tex	2016-02-01 22:54:02.347910700 +0900
+@@ -9430,43 +9430,68 @@
    \global\righthyphenmin = #3\relax
  }
  
@@ -100,7 +100,7 @@
  
  
  % Helpers for encodings.
-@@ -9496,13 +9521,6 @@
+@@ -9493,13 +9518,6 @@
  %
  \def\documentencoding{\parseargusing\filenamecatcodes\documentencodingzzz}
  \def\documentencodingzzz#1{%
@@ -114,7 +114,7 @@
    %
    % Encoding being declared for the document.
    \def\declaredencoding{\csname #1.enc\endcsname}%
-@@ -9519,22 +9537,37 @@
+@@ -9516,22 +9534,37 @@
       \asciichardefs
    %
    \else \ifx \declaredencoding \lattwo
@@ -156,7 +156,7 @@
    %
    \else
      \message{Ignoring unknown document encoding: #1.}%
-@@ -9849,13 +9882,26 @@
+@@ -9846,13 +9879,26 @@
  % @U{xxxx} to produce U+xxxx, if we support it.
  \def\U#1{%
    \expandafter\ifx\csname uni:#1\endcsname \relax
@@ -185,7 +185,7 @@
  \begingroup
    \catcode`\"=12
    \catcode`\<=12
-@@ -9864,7 +9910,7 @@
+@@ -9861,7 +9907,7 @@
    \catcode`\;=12
    \catcode`\!=12
    \catcode`\~=13
@@ -194,7 +194,7 @@
      \countUTFz = "#1\relax
      %\wlog{\space\space defining Unicode char U+#1 (decimal \the\countUTFz)}%
      \begingroup
-@@ -9922,6 +9968,37 @@
+@@ -9919,6 +9965,37 @@
      \uppercase{\gdef\UTFviiiTmp{#2#3#4}}}
  \endgroup
  
@@ -232,7 +232,7 @@
  % https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_M
  % U+0000..U+007F = https://en.wikipedia.org/wiki/Basic_Latin_(Unicode_block)
  % U+0080..U+00FF = https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)
-@@ -9936,7 +10013,7 @@
+@@ -9933,7 +10010,7 @@
  % We won't be doing that here in this simple file.  But we can try to at
  % least make most of the characters not bomb out.
  %
@@ -241,7 +241,7 @@
    \DeclareUnicodeCharacter{00A0}{\tie}
    \DeclareUnicodeCharacter{00A1}{\exclamdown}
    \DeclareUnicodeCharacter{00A2}{{\tcfont \char162}}% 0242=cent
-@@ -10606,14 +10683,42 @@
+@@ -10603,14 +10680,42 @@
    %
    \global\mathchardef\checkmark="1370 % actually the square root sign
    \DeclareUnicodeCharacter{2713}{\ensuremath\checkmark}
@@ -286,7 +286,7 @@
  \def\nonasciistringdefs{%
    \setnonasciicharscatcode\active
    \def\defstringchar##1{\def##1{\string##1}}%
-@@ -10659,9 +10764,23 @@
+@@ -10656,9 +10761,23 @@
    \defstringchar^^fc\defstringchar^^fd\defstringchar^^fe\defstringchar^^ff%
  }
  
@@ -311,7 +311,7 @@
  
  
  % Make non-ASCII characters printable again for compatibility with
-@@ -11010,7 +11129,7 @@
+@@ -11007,7 +11126,7 @@
  %
  {@catcode`- = @active
   @gdef@normalturnoffactive{%
