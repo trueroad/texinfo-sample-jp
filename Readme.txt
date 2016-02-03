@@ -31,7 +31,7 @@ wagahai-xetex.pdf
 
 
 texinfo.tex.org
-  Original texinfo.tex ver. 2016-02-01.08
+  Original texinfo.tex ver. 2016-02-02.19
   http://www.gnu.org/software/texinfo/
 
 texinfo.tex.native-unicode-replace8.diff

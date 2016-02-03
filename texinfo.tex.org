@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2016-02-01.08}
+\def\texinfoversion{2016-02-02.19}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -6054,7 +6054,13 @@ end
 \def\Yomitfromtockeyword{Yomitfromtoc}
 %
 \def\chapmacro#1#2#3{%
-  \checkenv{}% chapters, etc., should not start inside an environment.
+  \expandafter\ifx\thisenv\titlepage\else
+    \checkenv{}% chapters, etc., should not start inside an environment.
+  \fi
+  % FIXME: \chapmacro is currently called from inside \titlepage when
+  % \setcontentsaftertitlepage to print the "Table of Contents" heading, but
+  % this should probably be done by \sectionheading with an option to print
+  % in chapter size.
   %
   % Insert the first mark before the heading break (see notes for \domark).
   \let\prevchapterdefs=\lastchapterdefs
@@ -8601,7 +8607,7 @@ end
       %
       % output the `page 3'.
       \turnoffactive \putwordpage\tie\refx{#1-pg}{}%
-      \if\space\tokenafterxref
+      \if\noexpand\tokenafterxref\space
         ,% add a , if xref not followed by punctuation
       \fi
     \fi\fi
