@@ -4,8 +4,9 @@ https://github.com/trueroad/texinfo-sample-jp
 
 
 texinfo.tex
-  Native Unicode capable patched texinfo.tex
-  http://lists.gnu.org/archive/html/bug-texinfo/2016-01/msg00148.html
+  patched texinfo.tex
+    texinfo.tex.native-unicode-replace9.diff
+    texinfo.tex.remove-extra-space.diff
 
 txi-ja.tex
   Japanese translations and font definitions for texinfo.tex.
@@ -37,3 +38,7 @@ texinfo.tex.org
 texinfo.tex.native-unicode-replace9.diff
   Native Unicode capable patch
   http://lists.gnu.org/archive/html/bug-texinfo/2016-02/msg00009.html
+
+texinfo.tex.remove-extra-space.diff
+  Remove references extra space for native Unicode
+  http://lists.gnu.org/archive/html/bug-texinfo/2016-02/msg00010.html
