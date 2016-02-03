@@ -1449,6 +1449,56 @@ output) for that.)}
   \let\pdfmakeoutlines = \relax
 \fi  % \ifx\pdfoutput
 
+%
+% @image support for XeTeX
+%
+\newif\ifxeteximgpdf
+\ifx\XeTeXrevision\thisisundefined
+\else
+  %
+  % #1 is image name, #2 width (might be empty/whitespace), #3 height (ditto).
+  \def\doxeteximage#1#2#3{%
+    \def\xeteximagewidth{#2}\setbox0 = \hbox{\ignorespaces #2}%
+    \def\xeteximageheight{#3}\setbox2 = \hbox{\ignorespaces #3}%
+    %
+    % XeTeX (and the PDF format) support .pdf, .png, .jpg (among
+    % others).  Let's try in that order, PDF first since if
+    % someone has a scalable image, presumably better to use that than a
+    % bitmap.
+    \let\xeteximgext=\empty
+    \xeteximgpdffalse
+    \begingroup
+      \openin 1 #1.pdf \ifeof 1
+        \openin 1 #1.PDF \ifeof 1
+          \openin 1 #1.png \ifeof 1
+            \openin 1 #1.jpg \ifeof 1
+              \openin 1 #1.jpeg \ifeof 1
+                \openin 1 #1.JPG \ifeof 1
+                  \errmessage{Could not find image file #1 for XeTeX}%
+                \else \gdef\xeteximgext{JPG}%
+                \fi
+              \else \gdef\xeteximgext{jpeg}%
+              \fi
+            \else \gdef\xeteximgext{jpg}%
+            \fi
+          \else \gdef\xeteximgext{png}%
+          \fi
+        \else \gdef\xeteximgext{PDF} \global\xeteximgpdftrue%
+        \fi
+      \else \gdef\xeteximgext{pdf} \global\xeteximgpdftrue%
+      \fi
+      \closein 1
+    \endgroup
+    %
+    \ifxeteximgpdf
+      \XeTeXpdffile "#1".\xeteximgext ""
+    \else
+      \XeTeXpicfile "#1".\xeteximgext ""
+    \fi
+    \ifdim \wd0 >0pt width \xeteximagewidth \fi
+    \ifdim \wd2 >0pt height \xeteximageheight \fi \relax
+  }
+\fi
 
 \message{fonts,}
 
@@ -9084,12 +9134,21 @@ end
   %
   % Output the image.
   \ifpdf
+    % For pdfTeX and LuaTeX <= 0.80
     \dopdfimage{#1}{#2}{#3}%
   \else
-    % \epsfbox itself resets \epsf?size at each figure.
-    \setbox0 = \hbox{\ignorespaces #2}\ifdim\wd0 > 0pt \epsfxsize=#2\relax \fi
-    \setbox0 = \hbox{\ignorespaces #3}\ifdim\wd0 > 0pt \epsfysize=#3\relax \fi
-    \epsfbox{#1.eps}%
+    \ifx\XeTeXrevision\thisisundefined
+      % For epsf.tex
+      % \epsfbox itself resets \epsf?size at each figure.
+      \setbox0 = \hbox{\ignorespaces #2}%
+        \ifdim\wd0 > 0pt \epsfxsize=#2\relax \fi
+      \setbox0 = \hbox{\ignorespaces #3}%
+        \ifdim\wd0 > 0pt \epsfysize=#3\relax \fi
+      \epsfbox{#1.eps}%
+    \else
+      % For XeTeX
+      \doxeteximage{#1}{#2}{#3}%
+    \fi
   \fi
   %
   \ifimagevmode

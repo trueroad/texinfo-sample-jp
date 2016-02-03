@@ -7,6 +7,7 @@ texinfo.tex
   patched texinfo.tex
     texinfo.tex.native-unicode-replace9.diff
     texinfo.tex.remove-extra-space.diff
+    texinfo.tex.xetex-image-support4.diff
 
 txi-ja.tex
   Japanese translations and font definitions for texinfo.tex.
@@ -42,3 +43,7 @@ texinfo.tex.native-unicode-replace9.diff
 texinfo.tex.remove-extra-space.diff
   Remove references extra space for native Unicode
   http://lists.gnu.org/archive/html/bug-texinfo/2016-02/msg00010.html
+
+texinfo.tex.xetex-image-support4.diff
+  Add @image support for XeTeX
+  http://lists.gnu.org/archive/html/bug-texinfo/2016-02/msg00011.html
