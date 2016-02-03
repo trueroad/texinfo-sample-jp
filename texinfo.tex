@@ -1450,6 +1450,65 @@ output) for that.)}
 \fi  % \ifx\pdfoutput
 
 %
+% PDF outline support for XeTeX
+%
+\ifx\XeTeXrevision\thisisundefined
+\else
+  \pdfmakepagedesttrue \relax
+  \def\pdfdest name#1 xyz{%
+    \special{pdf:dest (name#1) [@thispage /XYZ @xpos @ypos]}%
+  }
+  \def\pdfmkdest#1{%
+    \special{pdf:dest (name#1) [@thispage /XYZ @xpos @ypos]}%
+  }
+  %
+  \def\dopdfoutline#1#2#3#4{%
+    \edef\pdfoutlinedest{#3}%
+    \ifx\pdfoutlinedest\empty
+      \def\pdfoutlinedest{#4}%
+    \fi
+    %
+    \edef\pdfoutlinetext{#1}%
+    %
+    \special{pdf:out [-] #2 << /Title (#1) /A << /S /GoTo /D (name\pdfoutlinedest) >> >> }%
+  }
+  %
+  \def\pdfmakeoutlines{%
+    \begingroup
+      \def\partentry##1##2##3##4{}% ignore parts in the outlines
+      \def\numchapentry##1##2##3##4{%
+        \dopdfoutline{##1}{1}{##3}{##4}}%
+      \def\numsecentry##1##2##3##4{%
+        \dopdfoutline{##1}{2}{##3}{##4}}%
+      \def\numsubsecentry##1##2##3##4{%
+        \dopdfoutline{##1}{3}{##3}{##4}}%
+      \def\numsubsubsecentry##1##2##3##4{%
+        \dopdfoutline{##1}{4}{##3}{##4}}%
+      %
+      \def\appentry{\numchapentry}%
+      \def\appsecentry{\numsecentry}%
+      \def\appsubsecentry{\numsubsecentry}%
+      \def\appsubsubsecentry{\numsubsubsecentry}%
+      \def\unnchapentry{\numchapentry}%
+      \def\unnsecentry{\numsecentry}%
+      \def\unnsubsecentry{\numsubsecentry}%
+      \def\unnsubsubsecentry{\numsubsubsecentry}%
+      %
+      \indexnofonts
+      \setupdatafile
+      %
+      \def\{{\lbracecharliteral}%
+      \def\}{\rbracecharliteral}%
+      \catcode`\\=\active \otherbackslash
+      \input \tocreadfilename
+    \endgroup
+  }
+
+  \special{pdf:docview << /PageMode /UseOutlines >> }
+  \special{pdf:tounicode UTF8-UTF16 }
+\fi
+
+%
 % @image support for XeTeX
 %
 \newif\ifxeteximgpdf
