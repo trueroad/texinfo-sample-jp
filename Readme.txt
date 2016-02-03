@@ -34,5 +34,6 @@ texinfo.tex.org
   Original texinfo.tex ver. 2016-02-02.19
   http://www.gnu.org/software/texinfo/
 
-texinfo.tex.native-unicode-replace8.diff
+texinfo.tex.native-unicode-replace9.diff
   Native Unicode capable patch
+  http://lists.gnu.org/archive/html/bug-texinfo/2016-02/msg00009.html
