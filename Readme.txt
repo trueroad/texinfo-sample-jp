@@ -8,7 +8,7 @@ texinfo.tex
     texinfo.tex.native-unicode-replace9.diff
     texinfo.tex.remove-extra-space.diff
     texinfo.tex.xetex-image-support4.diff
-    texinfo.tex.xetex-pdf-outline-support.diff
+    texinfo.tex.xetex-pdf-outline-support2.diff
 
 txi-ja.tex
   Japanese translations and font definitions for texinfo.tex.
@@ -49,6 +49,6 @@ texinfo.tex.xetex-image-support4.diff
   Add @image support for XeTeX
   http://lists.gnu.org/archive/html/bug-texinfo/2016-02/msg00011.html
 
-texinfo.tex.xetex-pdf-outline-support.diff
+texinfo.tex.xetex-pdf-outline-support2.diff
   Add PDF outline support for XeTeX
-  http://lists.gnu.org/archive/html/bug-texinfo/2016-02/msg00012.html
+
