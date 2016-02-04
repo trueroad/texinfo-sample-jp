@@ -21,6 +21,7 @@ http://www.aozora.gr.jp/cards/000148/card789.html
 
 @contents
 
+@node chapter1
 @unnumbered 一
 
 吾輩は猫である。
@@ -512,6 +513,7 @@ http://www.aozora.gr.jp/cards/000148/card789.html
 名前はまだつけてくれないが、
 欲をいっても際限がないから生涯この教師の家で無名の猫で終るつもりだ。
 
+@node chapter2
 @unnumbered 二
 
 吾輩は新年来多少有名になったので、
@@ -2406,6 +2408,7 @@ Z. Marcus は実にうまい。
 日本のスタンランが好んで吾輩の似顔をカンヴァスの上に描くようになったら、
 彼等鈍瞎漢は始めて自己の不明を恥ずるであろう。
 
+@node snip
 @unnumbered 以下略
 
 @bye
