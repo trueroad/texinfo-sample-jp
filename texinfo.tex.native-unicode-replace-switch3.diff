@@ -1,0 +1,76 @@
+--- texinfo.tex.org	2016-02-08 22:43:03.863678800 +0900
++++ texinfo.tex	2016-02-08 22:51:57.774630900 +0900
+@@ -10816,15 +10816,32 @@
+   \unicodechardefs
+ }
+ 
++\newif\ifpassthroughchars
++\passthroughcharsfalse
++
+ % For native Unicode (XeTeX and LuaTeX)
+-% Definition macro to replace the Unicode character
++% Definition macro to replace / pass-through the Unicode character
+ %
+ \def\DeclareUnicodeCharacterNative#1#2{%
+   \catcode"#1=\active
++  \def\dodeclareunicodecharacternative##1##2##3{%
++    \begingroup
++      \uccode`\~="##2\relax
++      \uppercase{\gdef~}{%
++        \ifpassthroughchars
++          ##1%
++        \else
++          ##3%
++        \fi
++      }
++    \endgroup
++  }
+   \begingroup
+-    \uccode`\~="#1\relax
+-    \uppercase{\gdef~}{#2}%
+-  \endgroup}
++    \uccode`\.="#1\relax
++    \uppercase{\def\UTFNativeTmp{.}}%
++    \expandafter\dodeclareunicodecharacternative\UTFNativeTmp{#1}{#2}%
++  \endgroup
++}
+ 
+ % Native Unicode (XeTeX and LuaTeX) character replacing definitions
+ % It makes the setting that replace the Unicode characters.
+@@ -10833,27 +10850,6 @@
+   \unicodechardefs
+ }
+ 
+-% For native Unicode (XeTeX and LuaTeX)
+-% Definition macro not to make the Unicode character expand to a non-active 
+-% token with the same character code.  Used when writing to auxiliary files.
+-%
+-\def\DeclareUnicodeCharacterNativeThru#1#2{%
+-  \catcode"#1=\active
+-  \begingroup
+-    \uccode`\.="#1\relax
+-    \uppercase{\endgroup \def\UTFNativeTmp{.}}%
+-  \begingroup
+-    \uccode`\~="#1\relax
+-    \uppercase{\endgroup \edef~}{\UTFNativeTmp}%
+-}
+-
+-% Native Unicode (XeTeX and LuaTeX) character ``through'' definitions.
+-% It makes the setting that does not replace the Unicode characters.
+-\def\nativeunicodechardefsthru{%
+-  \let\DeclareUnicodeCharacter\DeclareUnicodeCharacterNativeThru
+-  \unicodechardefs
+-}
+-
+ % For native Unicode (XeTeX and LuaTeX).  Make the character token expand
+ % to the sequences given in \unicodechardefs for printing.
+ \def\DeclareUnicodeCharacterNativeAtU#1#2{%
+@@ -10941,7 +10937,7 @@
+   \iftxiusebytewiseio
+     \nonasciistringdefs
+   \else
+-    \nativeunicodechardefsthru
++    \passthroughcharstrue
+   \fi
+ }
+ 

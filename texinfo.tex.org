@@ -10816,37 +10816,41 @@ directory should work if nowhere else does.}
   \unicodechardefs
 }
 
-\newif\ifpassthroughchars
-\passthroughcharsfalse
-
 % For native Unicode (XeTeX and LuaTeX)
-% Definition macro to replace / pass-through the Unicode character
+% Definition macro to replace the Unicode character
 %
 \def\DeclareUnicodeCharacterNative#1#2{%
   \catcode"#1=\active
-  \def\dodeclareunicodecharacternative##1##2##3{%
-    \begingroup
-      \uccode`\~="##2\relax
-      \uppercase{\gdef~}{%
-        \ifpassthroughchars
-          ##1%
-        \else
-          ##3%
-        \fi
-      }
-    \endgroup
-  }
   \begingroup
-    \uccode`\.="#1\relax
-    \uppercase{\def\UTFNativeTmp{.}}%
-    \expandafter\dodeclareunicodecharacternative\UTFNativeTmp{#1}{#2}%
-  \endgroup
-}
+    \uccode`\~="#1\relax
+    \uppercase{\gdef~}{#2}%
+  \endgroup}
 
 % Native Unicode (XeTeX and LuaTeX) character replacing definitions
 % It makes the setting that replace the Unicode characters.
 \def\nativeunicodechardefs{%
   \let\DeclareUnicodeCharacter\DeclareUnicodeCharacterNative
+  \unicodechardefs
+}
+
+% For native Unicode (XeTeX and LuaTeX)
+% Definition macro not to make the Unicode character expand to a non-active 
+% token with the same character code.  Used when writing to auxiliary files.
+%
+\def\DeclareUnicodeCharacterNativeThru#1#2{%
+  \catcode"#1=\active
+  \begingroup
+    \uccode`\.="#1\relax
+    \uppercase{\endgroup \def\UTFNativeTmp{.}}%
+  \begingroup
+    \uccode`\~="#1\relax
+    \uppercase{\endgroup \edef~}{\UTFNativeTmp}%
+}
+
+% Native Unicode (XeTeX and LuaTeX) character ``through'' definitions.
+% It makes the setting that does not replace the Unicode characters.
+\def\nativeunicodechardefsthru{%
+  \let\DeclareUnicodeCharacter\DeclareUnicodeCharacterNativeThru
   \unicodechardefs
 }
 
@@ -10937,7 +10941,7 @@ directory should work if nowhere else does.}
   \iftxiusebytewiseio
     \nonasciistringdefs
   \else
-    \passthroughcharstrue
+    \nativeunicodechardefsthru
   \fi
 }
 

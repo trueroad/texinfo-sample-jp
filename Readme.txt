@@ -4,12 +4,8 @@ https://github.com/trueroad/texinfo-sample-jp
 
 
 texinfo.tex
-  Original texinfo.tex ver. 2016-02-08.13
-  http://www.gnu.org/software/texinfo/
-    Native Unicode patches
-    XeTeX @image patch
-    XeTeX PDF outline patch
-  are merged to original.
+  patched texinfo.tex
+    texinfo.tex.native-unicode-replace-switch3.diff
 
 txi-ja.tex
   Japanese translations and font definitions for texinfo.tex.
@@ -31,3 +27,16 @@ wagahai-xetex.pdf
 
     $ PDFTEX=xetex texi2pdf wagahai.texi
     $ mv wagahai.pdf wagahai-xetex.pdf
+
+
+
+texinfo.tex.org
+  Original texinfo.tex ver. 2016-02-08.13
+  http://www.gnu.org/software/texinfo/
+    Native Unicode patches
+    XeTeX @image patch
+    XeTeX PDF outline patch
+  are merged to original.
+
+texinfo.tex.native-unicode-replace-switch3.diff
+  Native Unicode replace / pass-through method changing patch
