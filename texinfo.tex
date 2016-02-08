@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2016-02-02.19}
+\def\texinfoversion{2016-02-08.13}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1463,18 +1463,18 @@ output) for that.)}
     % We have to set dummies so commands such as @code, and characters
     % such as \, aren't expanded when present in a section title.
     \indexnofonts
-    \turnoffactive
     \makevalueexpandable
     % In the case of XeTeX, xdvipdfmx converts strings to UTF-16.
     % Therefore \txiescapepdf is not necessary.
     \safewhatsit{\pdfdest name{#1} xyz}%
   }}
   %
-  \def\dopdfoutlinexetex#1#2#3#4{%
+  \def\dopdfoutline#1#2#3#4{%
     \edef\pdfoutlinedest{#3}%
     \ifx\pdfoutlinedest\empty
       \def\pdfoutlinedest{#4}%
     \fi
+    \turnoffactive
     % In the case of XeTeX, xdvipdfmx converts strings to UTF-16.
     % Therefore \txiescapepdf is not necessary.
     \special{pdf:out [-] #2 << /Title (#1) /A << /S /GoTo /D (name\pdfoutlinedest) >> >> }%
@@ -1489,13 +1489,13 @@ output) for that.)}
       % We use the node names as the destinations.
       \def\partentry##1##2##3##4{}% ignore parts in the outlines
       \def\numchapentry##1##2##3##4{%
-        \dopdfoutlinexetex{##1}{1}{##3}{##4}}%
+        \dopdfoutline{##1}{1}{##3}{##4}}%
       \def\numsecentry##1##2##3##4{%
-        \dopdfoutlinexetex{##1}{2}{##3}{##4}}%
+        \dopdfoutline{##1}{2}{##3}{##4}}%
       \def\numsubsecentry##1##2##3##4{%
-        \dopdfoutlinexetex{##1}{3}{##3}{##4}}%
+        \dopdfoutline{##1}{3}{##3}{##4}}%
       \def\numsubsubsecentry##1##2##3##4{%
-        \dopdfoutlinexetex{##1}{4}{##3}{##4}}%
+        \dopdfoutline{##1}{4}{##3}{##4}}%
       %
       \let\appentry\numchapentry%
       \let\appsecentry\numsecentry%
@@ -8737,9 +8737,15 @@ end
       %
       % output the `page 3'.
       \turnoffactive \putwordpage\tie\refx{#1-pg}{}%
-      \if\noexpand\tokenafterxref\space
-        ,% add a , if xref not followed by punctuation
-      \fi
+      % Add a , if xref followed by a space
+      \if\space\noexpand\tokenafterxref ,%
+      \else\ifx\	\tokenafterxref ,% @TAB
+      \else\ifx\*\tokenafterxref ,%   @*
+      \else\ifx\ \tokenafterxref ,%   @SPACE
+      \else\ifx\
+                \tokenafterxref ,%    @NL
+      \else\ifx\tie\tokenafterxref ,% @tie
+      \fi\fi\fi\fi\fi\fi
     \fi\fi
   \fi
   \endlink
@@ -9704,7 +9710,7 @@ directory should work if nowhere else does.}
        % For native Unicode (XeTeX and LuaTeX)
        \nativeunicodechardefs
      \else
-       % For UTF-8 byte sequence (pdfTeX)
+       % For UTF-8 byte sequence (TeX, eTeX and pdfTeX)
        \setnonasciicharscatcode\active
        % since we already invoked \utfeightchardefs at the top level
        % (below), do not re-invoke it, then our check for duplicated
@@ -10040,7 +10046,7 @@ directory should work if nowhere else does.}
   \fi
 }
 
-% For UTF-8 byte sequence (pdfTeX)
+% For UTF-8 byte sequence (TeX, e-TeX and pdfTeX)
 % Definition macro to replace the Unicode character
 % Definition macro that is used by @U command
 %
@@ -10109,37 +10115,6 @@ directory should work if nowhere else does.}
     \uccode `#3\countUTFz
     \uppercase{\gdef\UTFviiiTmp{#2#3#4}}}
 \endgroup
-
-% For native Unicode (XeTeX and LuaTeX)
-% Definition macro to replace the Unicode character
-%
-\def\DeclareUnicodeCharacterNative#1#2{%
-  \catcode"#1=\active
-  \begingroup
-    \uccode`\~="#1\relax
-    \uppercase{\gdef~}{#2}%
-  \endgroup}
-
-% For native Unicode (XeTeX and LuaTeX)
-% Definition macro not to replace (through) the Unicode character
-%
-\def\DeclareUnicodeCharacterNativeThru#1#2{%
-  \catcode"#1=\active
-  \begingroup
-    \uccode`\.="#1\relax
-    \uppercase{\endgroup \def\UTFNativeTmp{.}}%
-  \begingroup
-    \uccode`\~="#1\relax
-    \uppercase{\endgroup \edef~}{\UTFNativeTmp}%
-}
-
-% For native Unicode (XeTeX and LuaTeX)
-% Definition macro that is used by @U command
-%
-\def\DeclareUnicodeCharacterNativeAtU#1#2{%
-  \def\UTFAtUTmp{#2}
-  \expandafter\globallet\csname uni:#1\endcsname \UTFAtUTmp
-}
 
 % For native Unicode (XeTeX and LuaTeX)
 % Definition macro that is set catcode other non global
@@ -10841,6 +10816,16 @@ directory should work if nowhere else does.}
   \unicodechardefs
 }
 
+% For native Unicode (XeTeX and LuaTeX)
+% Definition macro to replace the Unicode character
+%
+\def\DeclareUnicodeCharacterNative#1#2{%
+  \catcode"#1=\active
+  \begingroup
+    \uccode`\~="#1\relax
+    \uppercase{\gdef~}{#2}%
+  \endgroup}
+
 % Native Unicode (XeTeX and LuaTeX) character replacing definitions
 % It makes the setting that replace the Unicode characters.
 \def\nativeunicodechardefs{%
@@ -10848,11 +10833,32 @@ directory should work if nowhere else does.}
   \unicodechardefs
 }
 
-% Native Unicode (XeTeX and LuaTeX) character ``through'' definitions
+% For native Unicode (XeTeX and LuaTeX)
+% Definition macro not to make the Unicode character expand to a non-active 
+% token with the same character code.  Used when writing to auxiliary files.
+%
+\def\DeclareUnicodeCharacterNativeThru#1#2{%
+  \catcode"#1=\active
+  \begingroup
+    \uccode`\.="#1\relax
+    \uppercase{\endgroup \def\UTFNativeTmp{.}}%
+  \begingroup
+    \uccode`\~="#1\relax
+    \uppercase{\endgroup \edef~}{\UTFNativeTmp}%
+}
+
+% Native Unicode (XeTeX and LuaTeX) character ``through'' definitions.
 % It makes the setting that does not replace the Unicode characters.
 \def\nativeunicodechardefsthru{%
   \let\DeclareUnicodeCharacter\DeclareUnicodeCharacterNativeThru
   \unicodechardefs
+}
+
+% For native Unicode (XeTeX and LuaTeX).  Make the character token expand
+% to the sequences given in \unicodechardefs for printing.
+\def\DeclareUnicodeCharacterNativeAtU#1#2{%
+  \def\UTFAtUTmp{#2}
+  \expandafter\globallet\csname uni:#1\endcsname \UTFAtUTmp
 }
 
 % Native Unicode (XeTeX and LuaTeX) @U command definitions
@@ -10867,7 +10873,8 @@ directory should work if nowhere else does.}
   \unicodechardefs
 }
 
-% Catcode (non-ascii or native Unicode) are set to other non global.
+% Catcode (non-ASCII or native Unicode) are set to \other (non-global
+% assignments).
 \def\setcharscatcodeothernonglobal{%
   \iftxiusebytewiseio
     \setnonasciicharscatcodenonglobal\other
@@ -10881,8 +10888,8 @@ directory should work if nowhere else does.}
    \relax
 }
 
-% Non-ASCII bytes ``through'' definitions.
-% It makes the setting that does not replace the non-ASCII byte.
+% Redefine the active definitions of non-ASCII characters to expand to
+% non-active tokens with the same character code.
 \def\nonasciistringdefs{%
   \setnonasciicharscatcode\active
   \def\defstringchar##1{\def##1{\string##1}}%
@@ -10928,9 +10935,9 @@ directory should work if nowhere else does.}
   \defstringchar^^fc\defstringchar^^fd\defstringchar^^fe\defstringchar^^ff%
 }
 
-% Character ``through'' definitions.
-% It makes the setting that does not replace the characters.
-\def\throughcharactersdefs{%
+% Write characters literally, instead of using active definitions for
+% printing the correct glyphs.
+\def\passthroughcharacters{%
   \iftxiusebytewiseio
     \nonasciistringdefs
   \else
@@ -11293,7 +11300,7 @@ directory should work if nowhere else does.}
 %
 {@catcode`- = @active
  @gdef@normalturnoffactive{%
-   @throughcharactersdefs
+   @passthroughcharacters
    @let-=@normaldash
    @let"=@normaldoublequote
    @let$=@normaldollar %$ font-lock fix
