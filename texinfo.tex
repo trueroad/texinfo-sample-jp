@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2016-02-08.13}
+\def\texinfoversion{2016-02-09.12}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1474,10 +1474,12 @@ output) for that.)}
     \ifx\pdfoutlinedest\empty
       \def\pdfoutlinedest{#4}%
     \fi
-    \turnoffactive
-    % In the case of XeTeX, xdvipdfmx converts strings to UTF-16.
-    % Therefore \txiescapepdf is not necessary.
-    \special{pdf:out [-] #2 << /Title (#1) /A << /S /GoTo /D (name\pdfoutlinedest) >> >> }%
+    {
+      \turnoffactive
+      % In the case of XeTeX, xdvipdfmx converts strings to UTF-16.
+      % Therefore \txiescapepdf is not necessary.
+      \special{pdf:out [-] #2 << /Title (#1) /A << /S /GoTo /D (name\pdfoutlinedest) >> >> }%
+    }
   }
   %
   \def\pdfmakeoutlines{%
