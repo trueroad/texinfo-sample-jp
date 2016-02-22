@@ -4,12 +4,15 @@ https://github.com/trueroad/texinfo-sample-jp
 
 
 texinfo.tex
-  Original texinfo.tex ver. 2016-02-09.12
+  Original texinfo.tex ver. 2016-02-22.15
   http://www.gnu.org/software/texinfo/
     Native Unicode patches
     XeTeX @image patch
     XeTeX PDF outline patch
     Native Unicode replace / pass-through method changing patch
+    LuaTeX >= 0.85 support patch
+    LuaTeX PDF outline Unicode strings patch
+    etc.
   are merged to original.
 
 txi-ja.tex
