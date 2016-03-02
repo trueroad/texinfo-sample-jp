@@ -316,6 +316,12 @@
 \XeTeXlinebreakskip=0em plus 0.1em minus 0.01em
 \XeTeXlinebreakpenalty=0
 
+% For copy & paste Unicode characters (XeTeX 0.99995+)
+\ifx\XeTeXgenerateactualtext\thisisundefined
+\else
+  \XeTeXgenerateactualtext=1
+\fi
+
 \fi % XeTeX
 
 \iftxinativeunicodecapable
