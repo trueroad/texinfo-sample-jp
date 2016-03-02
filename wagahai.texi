@@ -23,7 +23,8 @@ http://www.aozora.gr.jp/cards/000148/card789.html
 
 @c XeTeX の場合、xdvipdfmx 20150315 の問題のため
 @c node 名に非 ASCII 文字列が使えません。
-@c xdvipdfmx 20160106 (TeX Live SVN r39753) で問題解消しています。
+@c XeTeX 0.99995 / xdvipdfmx 20160106 (TeX Live SVN r39753)
+@c で問題解消しています。
 @c http://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=1833#p10720
 @node chapter1
 @unnumbered 一
