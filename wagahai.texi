@@ -12,10 +12,8 @@
 @c 行末に @c 等を追加して行末が和文文字にならないようにするか、
 @c 次の行を空行にすることによってエラーを回避することができます。
 @c http://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=1852
-@title 吾輩は猫である
-@c @author 夏目漱石
-
-著者：夏目漱石
+@title 吾輩は猫である@c
+@author 夏目漱石
 
 これは日本語Texinfoファイルのサンプルとして作成しました。
 
@@ -32,7 +30,7 @@ http://www.aozora.gr.jp/cards/000148/card789.html
 @c XeTeX 0.99995 / xdvipdfmx 20160106 (TeX Live SVN r39753)
 @c で問題解消しています。
 @c http://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=1833#p10720
-@node chapter1
+@node 一@c
 @unnumbered 一
 
 吾輩は猫である。
@@ -524,7 +522,7 @@ http://www.aozora.gr.jp/cards/000148/card789.html
 名前はまだつけてくれないが、
 欲をいっても際限がないから生涯この教師の家で無名の猫で終るつもりだ。
 
-@node chapter2
+@node 二@c
 @unnumbered 二
 
 吾輩は新年来多少有名になったので、
@@ -2419,7 +2417,7 @@ Z. Marcus は実にうまい。
 日本のスタンランが好んで吾輩の似顔をカンヴァスの上に描くようになったら、
 彼等鈍瞎漢は始めて自己の不明を恥ずるであろう。
 
-@node snip
+@node 以下略@c
 @unnumbered 以下略
 
 @bye
