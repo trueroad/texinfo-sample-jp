@@ -6,6 +6,12 @@
 @settitle 吾輩は猫である
 
 @titlepage
+
+@c LuaTeX の場合、LuaTeX-ja 20160208 では @コマンド の行の最後に
+@c 和文文字があると、次の行でエラーになる場合があります。
+@c 行末に @c 等を追加して行末が和文文字にならないようにするか、
+@c 次の行を空行にすることによってエラーを回避することができます。
+@c http://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=1852
 @title 吾輩は猫である
 @c @author 夏目漱石
 
