@@ -16,7 +16,7 @@
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %
-% Written by Masamichi Hosoda, 30. January 2016, <trueroad@trueroad.jp>
+% Written by Masamichi Hosoda, 2. March 2016, <trueroad@trueroad.jp>
 
 \txisetlanguage{USenglish}{2}{3}
 
@@ -166,7 +166,7 @@
 
   \definealphabetictextfontsizex
 }
-\fi
+\fi % LuaTeX
 
 % For XeTeX
 %
@@ -311,11 +311,12 @@
   \definealphabetictextfontsizex
 }
 
+% Japanese line break settings
 \XeTeXlinebreaklocale "ja_JP"
 \XeTeXlinebreakskip=0em plus 0.1em minus 0.01em
 \XeTeXlinebreakpenalty=0
 
-\fi
+\fi % XeTeX
 
 \iftxinativeunicodecapable
 
@@ -404,4 +405,4 @@
 \definetextfontsizexi
 \globaldefs = 0
 
-\fi
+\fi % \iftxinativeunicodecapable
