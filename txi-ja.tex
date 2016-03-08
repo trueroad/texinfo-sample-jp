@@ -16,7 +16,7 @@
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %
-% Written by Masamichi Hosoda, 2. March 2016, <trueroad@trueroad.jp>
+% Written by Masamichi Hosoda, 8. March 2016, <trueroad@trueroad.jp>
 
 \txisetlanguage{USenglish}{2}{3}
 
@@ -165,6 +165,26 @@
   \jfont\shortcontgt{file:ipaexg.ttf:jfm=ujis} at 11.55pt
 
   \definealphabetictextfontsizex
+}
+
+% Ignore LuaTeX-ja added line end comment
+% https://osdn.jp/ticket/browse.php?group_id=5593&tid=36096
+%
+% Re-define texinfo.tex's \parseargusing
+\def\parseargusing#1#2{%
+  \def\argtorun{#2}%
+  \begingroup
+    \ifx\ltjlineendcomment\thisisundefined
+      % Ignore U+FFFFF for LuaTeX-ja <= 20160208.0
+      \catcode"FFFFF=9
+    \else
+      % Ignore the character \ltjlineendcomment for LuaTeX-ja > 20160208.0
+      \catcode\ltjlineendcomment=9
+    \fi
+    \obeylines
+    \spaceisspace
+    #1%
+    \parseargline\empty% Insert the \empty token, see \finishparsearg below.
 }
 \fi % LuaTeX
 
