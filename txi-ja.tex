@@ -16,7 +16,7 @@
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %
-% Written by Masamichi Hosoda, 8. March 2016, <trueroad@trueroad.jp>
+% Written by Masamichi Hosoda, 12. March 2016, <trueroad@trueroad.jp>
 
 \txisetlanguage{USenglish}{2}{3}
 
@@ -186,6 +186,34 @@
     #1%
     \parseargline\empty% Insert the \empty token, see \finishparsearg below.
 }
+% Re-define texinfo.tex's \comment
+\def\comment{\begingroup \catcode`\^^M=\active%
+  \ifx\ltjlineendcomment\thisisundefined
+    % Ignore U+FFFFF for LuaTeX-ja <= 20160208.0
+    \catcode"FFFFF=9%
+  \else
+    % Ignore the character \ltjlineendcomment for LuaTeX-ja > 20160208.0
+    \catcode\ltjlineendcomment=9%
+  \fi
+\catcode`\@=\other \catcode`\{=\other \catcode`\}=\other\commentxxx}%
+% Re-let \comment related macros
+\let\setfilename=\comment
+\let\dircategory=\comment
+\let\definfoenclose=\comment
+\let\footnotestyle=\comment
+% Re-define texinfo.tex's \c
+\def\c{\begingroup \catcode`\^^M=\active%
+  \ifx\ltjlineendcomment\thisisundefined
+    % Ignore U+FFFFF for LuaTeX-ja <= 20160208.0
+    \catcode"FFFFF=9%
+  \else
+    % Ignore the character \ltjlineendcomment for LuaTeX-ja > 20160208.0
+    \catcode\ltjlineendcomment=9%
+  \fi
+\catcode`\@=\other \catcode`\{=\other \catcode`\}=\other%
+\cxxx}
+% Re-let \c related macro
+\let\texinfoc=\c
 \fi % LuaTeX
 
 % For XeTeX
