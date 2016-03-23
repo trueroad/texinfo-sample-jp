@@ -4,6 +4,7 @@
 @documentlanguage ja
 
 @settitle 吾輩は猫である
+@afourpaper
 
 @titlepage
 
