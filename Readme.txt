@@ -4,7 +4,7 @@ https://github.com/trueroad/texinfo-sample-jp
 
 
 texinfo.tex
-  Original texinfo.tex ver. 2016-03-23.14
+  Original texinfo.tex ver. 2016-03-29.15
   http://www.gnu.org/software/texinfo/
     Native Unicode patches
     XeTeX @image patch
