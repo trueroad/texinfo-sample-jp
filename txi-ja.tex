@@ -77,6 +77,11 @@
 % Japanese font definitions
 %
 
+\ifx\txijapackage\thisisundefined
+  \errmessage{Required CJK package is not found.
+  Use `texinfo-ja.tex' instead of `texinfo.tex'}
+\else
+
 % For LuaTeX
 %
 \ifx\luatexversion\thisisundefined
@@ -460,3 +465,5 @@
 \globaldefs = 0
 
 \fi % \iftxinativeunicodecapable
+
+\fi % \ifx\txijapackage\thisisundefined
