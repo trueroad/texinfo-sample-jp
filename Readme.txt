@@ -33,7 +33,7 @@ wagahai-luatex.pdf
 wagahai-xetex.pdf
   Compiled by XeTeX as following commands.
 
-    $ PDFTEX=xetex texi2pdf wagahai.texi
+    $ PDFTEX="xetex --output-driver='xdvipdfmx -C 0x0010'" texi2pdf wagahai.texi
     $ mv wagahai.pdf wagahai-xetex.pdf
 
 Makefile
