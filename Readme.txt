@@ -25,16 +25,10 @@ wagahai.texi
   Japanese Texinfo file sample
 
 wagahai-luatex.pdf
-  Compiled by LuaTeX as following commands.
-
-    $ PDFTEX=luatex texi2pdf wagahai.texi
-    $ mv wagahai.pdf wagahai-luatex.pdf
+  Compiled by LuaTeX 0.95.0 (TeX Live 2016 pretest).
 
 wagahai-xetex.pdf
-  Compiled by XeTeX as following commands.
-
-    $ PDFTEX="xetex --output-driver='xdvipdfmx -C 0x0010'" texi2pdf wagahai.texi
-    $ mv wagahai.pdf wagahai-xetex.pdf
+  Compiled by XeTeX 0.99996 (TeX Live 2016 pretest).
 
 Makefile
   Makefile for this sample.
