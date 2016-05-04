@@ -35,3 +35,6 @@ wagahai-xetex.pdf
 
     $ PDFTEX=xetex texi2pdf wagahai.texi
     $ mv wagahai.pdf wagahai-xetex.pdf
+
+Makefile
+  Makefile for this sample.
