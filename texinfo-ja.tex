@@ -16,7 +16,7 @@
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %
-% Written by Masamichi Hosoda, 4. May 2016, <trueroad@trueroad.jp>
+% Written by Masamichi Hosoda, 5 May 2016, <trueroad@trueroad.jp>
 
 %
 % For LuaTeX
@@ -26,9 +26,10 @@
   % LuaTeX-ja: Typeset Japanese with Lua(La)TeX
   % http://www.ctan.org/tex-archive/macros/luatex/generic/luatexja
   \openin 1 luatexja.sty \ifeof 1
-    \errmessage{LuaTeX-ja package is not found.
+    \errmessage{LuaTeX-ja is not found.
     It is required for Japanese Texinfo files with LuaTeX.
-    http://www.ctan.org/tex-archive/macros/luatex/generic/luatexja}
+    http://www.ctan.org/tex-archive/macros/luatex/generic/luatexja
+    It might be contained in texlive-lang-japanese package}
   \else
     \input luatexja.sty
     \def\txijapackage{LaTeX-ja}
@@ -47,9 +48,11 @@
   % but can also used in Japanese.
   %
   \openin 1 zhspacing.sty \ifeof 1
-    \errmessage{zhspacing package is not found.
+    \errmessage{zhspacing is not found.
     It is required for Japanese Texinfo files with LuaTeX.
-    http://www.ctan.org/tex-archive/macros/xetex/generic/zhspacing}
+    http://www.ctan.org/tex-archive/macros/xetex/generic/zhspacing
+    It might be contained in texlive-lang-chinese.
+    (This package is for Chinese, but can also used in Japanese)}
   \else
     \def\zhfont{dummy} % Cancel the request of SimSun font
     \def\zhpunctfont{dummy} % Cancel the request of SimSun font
