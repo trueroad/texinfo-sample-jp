@@ -16,13 +16,17 @@
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %
-% Written by Masamichi Hosoda, 5 May 2016, <trueroad@trueroad.jp>
+% Written by Masamichi Hosoda, 6 May 2016, <trueroad@trueroad.jp>
 
 %
 % For LuaTeX
 %
 \ifx\luatexversion\thisisundefined
 \else
+  % LuaTeX 0.95+ is required.
+  \ifnum\luatexversion<95
+    \errmessage{LuaTeX 0.95+ is required}
+  \fi
   % LuaTeX-ja: Typeset Japanese with Lua(La)TeX
   % http://www.ctan.org/tex-archive/macros/luatex/generic/luatexja
   \openin 1 luatexja.sty \ifeof 1
