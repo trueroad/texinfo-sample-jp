@@ -45,6 +45,10 @@
 %
 \ifx\XeTeXrevision\thisisundefined
 \else
+  % XeTeX 0.9998+ is required.
+  \ifnum\strcmp{\the\XeTeXversion\XeTeXrevision}{0.9998}<0
+    \errmessage{XeTeX 0.9998+ is required}
+  \fi
   % zhspacing: Spacing for mixed CJK-English documents in XeTeX
   % http://www.ctan.org/tex-archive/macros/xetex/generic/zhspacing
   %
