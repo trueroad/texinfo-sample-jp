@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2016-04-14.07}
+\def\texinfoversion{2016-05-07.13}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1534,7 +1534,6 @@ output) for that.)}
   %
   % PDF outline support
   %
-  \pdfmakepagedesttrue \relax
   % Emulate the primitive of pdfTeX
   \def\pdfdest name#1 xyz{%
     \special{pdf:dest (name#1) [@thispage /XYZ @xpos @ypos]}%
@@ -6682,7 +6681,14 @@ end
   % 1 and 2 (the page numbers aren't printed), and so are the first
   % two pages of the document.  Thus, we'd have two destinations named
   % `1', and two named `2'.
-  \ifpdf \global\pdfmakepagedesttrue \fi
+  \ifpdf
+    \global\pdfmakepagedesttrue
+  \else
+    \ifx\XeTeXrevision\thisisundefined
+    \else
+      \global\pdfmakepagedesttrue
+    \fi
+  \fi
 }
 
 
