@@ -19,19 +19,19 @@ short-sample-ja.texi
   Current Texinfo repository contains this file from 2016-05-06.
 
 short-sample-ja-luatex.pdf
-  Compiled by LuaTeX 0.95.0 (TeX Live 2016 pretest).
+  Compiled by LuaTeX 0.95.0 (TeX Live 2016).
 
 short-sample-ja-xetex.pdf
-  Compiled by XeTeX 0.99996 (TeX Live 2016 pretest).
+  Compiled by XeTeX 0.99996 (TeX Live 2016).
 
 wagahai.texi
   Japanese Texinfo file sample.
 
 wagahai-luatex.pdf
-  Compiled by LuaTeX 0.95.0 (TeX Live 2016 pretest).
+  Compiled by LuaTeX 0.95.0 (TeX Live 2016).
 
 wagahai-xetex.pdf
-  Compiled by XeTeX 0.99996 (TeX Live 2016 pretest).
+  Compiled by XeTeX 0.99996 (TeX Live 2016).
 
 Makefile
   Makefile for this sample.
