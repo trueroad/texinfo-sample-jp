@@ -8,15 +8,15 @@ texinfo.tex
 
 txi-ja.tex
   Japanese translations and font definitions for texinfo.tex.
-  Current Texinfo repository contain this file from 2016-05-06.
+  Current Texinfo repository contains this file from 2016-05-06.
 
 texinfo-ja.tex
   Japanese texinfo.tex loader
-  Current Texinfo repository contain this file from 2016-05-06.
+  Current Texinfo repository contains this file from 2016-05-06.
 
 short-sample-ja.texi
-  Short sample of Japanese Texinfo support files.
-  Current Texinfo repository contain this file from 2016-05-06.
+  A short sample of the Japanese Texinfo support files.
+  Current Texinfo repository contains this file from 2016-05-06.
 
 short-sample-ja-luatex.pdf
   Compiled by LuaTeX 0.95.0 (TeX Live 2016 pretest).
