@@ -3,7 +3,10 @@ all: wagahai-luatex.pdf wagahai-xetex.pdf \
 
 TEXINFO_JA = texinfo.tex texinfo-ja.tex txi-ja.tex
 PDFTEX_LUATEX = luatex
-PDFTEX_XETEX = "xetex --output-driver='xdvipdfmx -C 0x0010'"
+# For XeTeX 0.99996+ (TeX Live 2016+)
+PDFTEX_XETEX = xetex
+# For XeTeX < 0.99996 (TeX Live < 2016)
+#PDFTEX_XETEX = "xetex --output-driver='xdvipdfmx -C 0x0010'"
 
 short-sample-ja-luatex.pdf: short-sample-ja.texi $(TEXINFO_JA)
 	rm -f short-sample-ja-luatex.pdf
