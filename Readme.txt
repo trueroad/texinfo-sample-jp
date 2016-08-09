@@ -4,7 +4,8 @@ https://github.com/trueroad/texinfo-sample-jp
 
 
 texinfo.tex
-  Original texinfo.tex ver. 2016-07-20.14
+  Original texinfo.tex ver. 2016-08-08.23
+  (Texinfo SVN r.7309)
 
 txi-ja.tex
   Japanese translations and font definitions for texinfo.tex.
