@@ -4,20 +4,20 @@ https://github.com/trueroad/texinfo-sample-jp
 
 
 texinfo.tex
-  Original texinfo.tex ver. 2016-08-08.23
-  (Texinfo SVN r.7309)
+  Original texinfo.tex ver. 2016-09-17.16
+  (Texinfo SVN r.7368)
 
 txi-ja.tex
   Japanese translations and font definitions for texinfo.tex.
-  Current Texinfo repository contains this file from 2016-05-06.
+  Texinfo 6.3 contains this file.
 
 texinfo-ja.tex
   Japanese texinfo.tex loader
-  Current Texinfo repository contains this file from 2016-05-06.
+  Texinfo 6.3 contains this file.
 
 short-sample-ja.texi
   A short sample of the Japanese Texinfo support files.
-  Current Texinfo repository contains this file from 2016-05-06.
+  Texinfo 6.3 contains this file.
 
 short-sample-ja-luatex.pdf
   Compiled by LuaTeX 0.95.0 (TeX Live 2016).
